@@ -2,32 +2,30 @@ from __future__ import annotations
 import asyncio
 import websockets
 
-
 # 私たちの用いる次の一手は以下の構成で2文字で表される．
 # {ID}{ピースの設置可能点(左ならば左ほどよい)}
 our_peace = [
-	"A0",
-	"B0",
-	"C0",
-	"D0", "D1",
-	"E0",
-	"F0", "F2", "F3",
-	"G0", "G2",
-	"H0",
-	"I0", "I1",
-	"J0",
-	"K0", "K3", "K4",
-	"L0", "L2", "L3", "L4",
-	"M0", "M1", "M3", "M4",
-	"N0", "N1",
-	"O0", "O2", "O4",
-	"P0", "P2"
-	"Q0", "Q2"
-	"R0", "R1", "R2",
-	"S0", "S1",
-	"T0", "T1", "T3", "T4",
-	"U0"]
-
+	'A0',
+	'B0',
+	'C0',
+	'D0', 'D1',
+	'E0',
+	'F0', 'F2', 'F3',
+	'G0', 'G2',
+	'H0',
+	'I0', 'I1',
+	'J0',
+	'K0', 'K3', 'K4',
+	'L0', 'L2', 'L3', 'L4',
+	'M0', 'M1', 'M3', 'M4',
+	'N0', 'N1',
+	'O0', 'O2', 'O4',
+	'P0', 'P2'
+	'Q0', 'Q2'
+	'R0', 'R1', 'R2',
+	'S0', 'S1',
+	'T0', 'T1', 'T3', 'T4',
+	'U0']
 
 class PlayerClient:
     def __init__(self, player_number: int, socket: websockets.WebSocketClientProtocol, loop: asyncio.AbstractEventLoop):
