@@ -18,7 +18,7 @@ class ArrayManipulator:
             result = np.rot90(result, k=1)
             self.base = [7, 8]
         else:
-            self.base = [2, 2]
+            self.base = [7, 7]
 
         if flip:
             result = np.flip(result, axis=1)
