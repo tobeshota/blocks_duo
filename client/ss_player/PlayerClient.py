@@ -80,7 +80,7 @@ class PlayerClient:
 
     def create_action(self, board):
         actions: list[str]
-        turn: int_board
+        turn: int
         if self.player_number == 1:
             actions = self.p1Actions
             turn = self.p1turn
