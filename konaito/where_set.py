@@ -130,6 +130,22 @@ def can_set_block(our_board, position, our_peace):
 def test_block(our_board, our_peace, type=0):
     set_position = where_set(our_board)
     for i in set_position:
-        if can_set_block(our_board, i, test_array=ArrayManipulator(our_peace)[type]) and is_adjacent_with_values(our_board):
-            return True
+        test_array = ArrayManipulator(our_peace)[type]
+        if can_set_block(our_board, i, test_array) and is_adjacent_with_values(our_board):
+            return {
+                'position': i,
+                'array': test_array
+            }
     return False
+
+def get_position(set_array):
+    top=1000
+    left=1000
+    for i in range(len(set_array)):
+        for j in range(len(set_array[i])):
+            if set_array[i][j] == 2:
+                if i < top:
+                    top = i
+                if j < left:
+                    left = j
+    return [top, left]
