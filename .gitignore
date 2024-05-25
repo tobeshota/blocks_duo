@@ -8,3 +8,8 @@
 /client/blocks_duo_ss_tarou.egg-info/
 /client/build/
 /ssvenv/
+
+# 追記
+.DS_Store
+game_log.txt
+*.log
