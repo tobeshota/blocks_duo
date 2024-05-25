@@ -50,6 +50,40 @@ def is_adjacent(array):
 
     return connected_count == ones_count
 
+def is_adjacent_with_values(array, value1, value2):
+    rows, cols = array.shape
+    visited = np.zeros_like(array, dtype=bool)
+
+    def get_neighbors(r, c):
+        neighbors = []
+        if r > 0:
+            neighbors.append((r - 1, c))
+        if r < rows - 1:
+            neighbors.append((r + 1, c))
+        if c > 0:
+            neighbors.append((r, c - 1))
+        if c < cols - 1:
+            neighbors.append((r, c + 1))
+        return neighbors
+
+    for r in range(rows):
+        for c in range(cols):
+            if array[r, c] == value1:
+                queue = deque([(r, c)])
+                visited[r, c] = True
+
+                while queue:
+                    cr, cc = queue.popleft()
+
+                    for nr, nc in get_neighbors(cr, cc):
+                        if array[nr, nc] == value2:
+                            return True
+                        if array[nr, nc] == value1 and not visited[nr, nc]:
+                            visited[nr, nc] = True
+                            queue.append((nr, nc))
+
+    return False
+
 def can_set_position(our_board,position,NONE=0,US=1,ENEMY=3):
     if our_board[position[0]][position[1]] >NONE:
         return False
