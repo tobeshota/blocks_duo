@@ -13,6 +13,16 @@ def can_set_position(our_board,position,NONE=0,US=1,ENEMY=3):
             return True
     return False
 
+def can_set_with_block(our_board,position,NONE=0,US=1,ENEMY=3):
+    if our_board[position[0]][position[1]] >NONE:
+        return False
+    for i in [[-1,0],[1,0],[0,-1],[0,1]]:
+        if position[0]+i[0]<0 or position[0]+i[0]>=len(our_board) or position[1]+i[1]<0 or position[1]+i[1]>=len(our_board[0]):
+            continue
+        if our_board[position[0]+i[0]][position[1]+i[1]]==US:
+            return False
+    return True
+
 def where_set(our_board):
     ret=[]
     for pindex,p in enumerate(our_board):
