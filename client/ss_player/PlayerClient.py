@@ -1,6 +1,9 @@
 from __future__ import annotations
 import asyncio
 import websockets
+import logging
+
+logging.basicConfig(filename='game_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 
 # 私たちの用いる次の一手は以下の構成で2文字で表される．
@@ -49,15 +52,37 @@ class PlayerClient:
     async def play(self):
         while True:
             board = await self._socket.recv()
+            our_board = self.convert_board(board) #hirosuzu
+            self.log_int_board(our_board) #hirosuzu
             action = self.create_action(board)
             await self._socket.send(action)
             if action == 'X000':
                 raise SystemExit
 
+
+    def convert_board(self, board):
+        int_board = []
+        # 各行のデータ部分のみを抽出して変換
+        for row in board.split('\n')[1:]:
+            int_row = []
+            for cell in row[1:]:
+                if cell == '.':
+                    int_row.append(0)
+                elif cell == 'o':
+                    int_row.append(1)
+                elif cell == 'x':
+                    int_row.append(4)
+            int_board.append(int_row)
+        return int_board
+
+
+    def log_int_board(self, board):
+        board_str = '\n'.join(' '.join(map(str, row)) for row in board)
+        logging.info(f"Board state:\n{board_str}\n")
+
     def create_action(self, board):
         actions: list[str]
-        turn: int
-
+        turn: int_board
         if self.player_number == 1:
             actions = self.p1Actions
             turn = self.p1turn
