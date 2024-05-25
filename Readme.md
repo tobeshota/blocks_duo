@@ -13,3 +13,5 @@ pip install -U ./client
 
 # サンプルプレイヤーでの実行
 start_blocksduo ss_tarou ss_tarou
+
+💡発表資料は[こちら](https://docs.google.com/presentation/d/1Gk4SO-4Fz3hwd9SK5HQSCKoQrS_5lqbb3UjWP_nTBmY/edit?hl=JA#slide=id.g2e024a97e2c_0_0)
