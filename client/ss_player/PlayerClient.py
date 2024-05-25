@@ -58,7 +58,6 @@ class PlayerClient:
         actions: list[str]
         turn: int
 
-        print(our_peace)
         if self.player_number == 1:
             actions = self.p1Actions
             turn = self.p1turn
