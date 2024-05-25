@@ -1,7 +1,5 @@
 import numpy as np
-
 from collections import deque
-
 from rotate_flip import ArrayManipulator
 
 def is_adjacent(array):
@@ -84,37 +82,37 @@ def is_adjacent_with_values(array, value1, value2):
 
     return False
 
-def can_set_position(our_board,position,NONE=0,US=1,ENEMY=3):
-    if our_board[position[0]][position[1]] >NONE:
+def can_set_position(our_board, position, NONE=0, US=1, ENEMY=3):
+    if our_board[position[0]][position[1]] > NONE:
         return False
-    for i in [[-1,0],[1,0],[0,-1],[0,1]]:
-        if position[0]+i[0]<0 or position[0]+i[0]>=len(our_board) or position[1]+i[1]<0 or position[1]+i[1]>=len(our_board[0]):
+    for i in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
+        if position[0] + i[0] < 0 or position[0] + i[0] >= len(our_board) or position[1] + i[1] < 0 or position[1] + i[1] >= len(our_board[0]):
             continue
-        if our_board[position[0]+i[0]][position[1]+i[1]]==US:
+        if our_board[position[0] + i[0]][position[1] + i[1]] == US:
             return False
-    for i in [[-1,-1],[-1,1],[1,-1],[1,1]]:
-        if position[0]+i[0]<0 or position[0]+i[0]>=len(our_board) or position[1]+i[1]<0 or position[1]+i[1]>=len(our_board[0]):
+    for i in [[-1, -1], [-1, 1], [1, -1], [1, 1]]:
+        if position[0] + i[0] < 0 or position[0] + i[0] >= len(our_board) or position[1] + i[1] < 0 or position[1] + i[1] >= len(our_board[0]):
             continue
-        if our_board[position[0]+i[0]][position[1]+i[1]]==ENEMY:
+        if our_board[position[0] + i[0]][position[1] + i[1]] == ENEMY:
             return True
     return False
 
-def can_set_with_block(our_board,position,NONE=0,US=1,ENEMY=3):
-    if our_board[position[0]][position[1]] >NONE:
+def can_set_with_block(our_board, position, NONE=0, US=1, ENEMY=3):
+    if our_board[position[0]][position[1]] > NONE:
         return False
-    for i in [[-1,0],[1,0],[0,-1],[0,1]]:
-        if position[0]+i[0]<0 or position[0]+i[0]>=len(our_board) or position[1]+i[1]<0 or position[1]+i[1]>=len(our_board[0]):
+    for i in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
+        if position[0] + i[0] < 0 or position[0] + i[0] >= len(our_board) or position[1] + i[1] < 0 or position[1] + i[1] >= len(our_board[0]):
             continue
-        if our_board[position[0]+i[0]][position[1]+i[1]]==US:
+        if our_board[position[0] + i[0]][position[1] + i[1]] == US:
             return False
     return True
 
 def where_set(our_board):
-    ret=[]
-    for pindex,p in enumerate(our_board):
-        for qindex,q in enumerate(p):
-            if can_set_position(our_board,[pindex,qindex]):
-                ret.append([pindex,qindex])
+    ret = []
+    for pindex, p in enumerate(our_board):
+        for qindex, q in enumerate(p):
+            if can_set_position(our_board, [pindex, qindex]):
+                ret.append([pindex, qindex])
     return ret
 
 def shift_array(array, shift):
@@ -132,18 +130,18 @@ def contains_only_specified_values(array, valid_values):
             return False
     return True
 
-def can_set_block(our_board,position,our_peace):
-    set_block=shift_array(shift_array(our_peace.array,-our_peace.position),position)*2
+def can_set_block(our_board, position, our_peace):
+    set_block = shift_array(shift_array(our_peace.array, -our_peace.position), position) * 2
     if not is_adjacent(set_block):
         return False
-    our_board=our_board+set_block
-    if contains_only_specified_values(our_board,[0,1,4]):
+    our_board = our_board + set_block
+    if contains_only_specified_values(our_board, [0, 1, 4]):
         return False
     return True
 
-def test_blocks(our_board,our_peace,type=0):
-    set_position=where_set(our_board)
+def test_blocks(our_board, our_peace, type=0):
+    set_position = where_set(our_board)
     for i in set_position:
-        if can_set_block(our_board,i,test_array=ArrayManipulator(our_peace)[type]):
+        if can_set_block(our_board, i, test_array=ArrayManipulator(our_peace)[type]) and is_adjacent_with_values(our_board):
             return True
     return False
