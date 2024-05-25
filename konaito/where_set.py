@@ -2,11 +2,7 @@ import numpy as np
 from collections import deque
 from rotate_flip import ArrayManipulator
 
-def is_adjacent(array):
-    rows, cols = array.shape
-    visited = np.zeros_like(array, dtype=bool)
-
-    def get_neighbors(r, c):
+def get_neighbors(rows,cols,r, c):
         neighbors = []
         if r > 0:
             neighbors.append((r - 1, c))
@@ -17,6 +13,10 @@ def is_adjacent(array):
         if c < cols - 1:
             neighbors.append((r, c + 1))
         return neighbors
+
+def is_adjacent(array):
+    rows, cols = array.shape
+    visited = np.zeros_like(array, dtype=bool)
 
     # Find the first '1' to start the BFS
     start = None
@@ -41,7 +41,7 @@ def is_adjacent(array):
         r, c = queue.popleft()
         connected_count += 1
 
-        for nr, nc in get_neighbors(r, c):
+        for nr, nc in get_neighbors(rows,cols,r, c):
             if array[nr, nc] == 1 and not visited[nr, nc]:
                 visited[nr, nc] = True
                 queue.append((nr, nc))
@@ -52,18 +52,6 @@ def is_adjacent_with_values(array, value1, value2):
     rows, cols = array.shape
     visited = np.zeros_like(array, dtype=bool)
 
-    def get_neighbors(r, c):
-        neighbors = []
-        if r > 0:
-            neighbors.append((r - 1, c))
-        if r < rows - 1:
-            neighbors.append((r + 1, c))
-        if c > 0:
-            neighbors.append((r, c - 1))
-        if c < cols - 1:
-            neighbors.append((r, c + 1))
-        return neighbors
-
     for r in range(rows):
         for c in range(cols):
             if array[r, c] == value1:
@@ -73,7 +61,7 @@ def is_adjacent_with_values(array, value1, value2):
                 while queue:
                     cr, cc = queue.popleft()
 
-                    for nr, nc in get_neighbors(cr, cc):
+                    for nr, nc in get_neighbors(rows,cols,cr, cc):
                         if array[nr, nc] == value2:
                             return True
                         if array[nr, nc] == value1 and not visited[nr, nc]:
@@ -139,7 +127,7 @@ def can_set_block(our_board, position, our_peace):
         return False
     return True
 
-def test_blocks(our_board, our_peace, type=0):
+def test_block(our_board, our_peace, type=0):
     set_position = where_set(our_board)
     for i in set_position:
         if can_set_block(our_board, i, test_array=ArrayManipulator(our_peace)[type]) and is_adjacent_with_values(our_board):
