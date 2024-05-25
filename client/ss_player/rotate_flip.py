@@ -3,20 +3,20 @@ import numpy as np
 class ArrayManipulator:
     def __init__(self, array):
         self.array = np.array(array)
-        self.base = [2, 2]
+        self.base = [7, 7]
 
     def rotate_flip(self, angle, flip):
         result = self.array
         
         if angle == 90:
             result = np.rot90(result, k=-1)
-            self.base = [2, 4]
+            self.base = [8, 7]
         elif angle == 180:
             result = np.rot90(result, k=2)
-            self.base = [4, 4]
+            self.base = [8, 8]
         elif angle == 270:
             result = np.rot90(result, k=1)
-            self.base = [4, 2]
+            self.base = [7, 8]
         else:
             self.base = [2, 2]
 
