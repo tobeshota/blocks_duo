@@ -39,6 +39,8 @@ class PlayerClient:
         self.p2Actions = ['A0AA', 'B098', 'N0A5', 'L659', 'K33B', 'J027', 'E2B9', 'C267', 'U07C', 'M3AD', 'O2BB', 'R41C']
         self.p1turn = 0
         self.p2turn = 0
+        self.us = 1
+        self.enemy = 4
 
     @property
     def player_number(self) -> int:
@@ -51,7 +53,7 @@ class PlayerClient:
         while True:
             board = await self._socket.recv()
             our_board = self.convert_board(board) #hirosuzu
-            self.log_int_board(our_board) #hirosuzu
+            # self.log_int_board(our_board) #hirosuzu
             action = self.create_action(board)
             await self._socket.send(action)
             if action == 'X000':
@@ -74,13 +76,23 @@ class PlayerClient:
         return int_board
 
 
-    def log_int_board(self, board):
-        board_str = '\n'.join(' '.join(map(str, row)) for row in board)
-        logging.info(f"Board state:\n{board_str}\n")
+# 出力結果: 15
+
+    # def log_int_board(self, board):
+    #     board_str = '\n'.join(' '.join(map(str, row)) for row in board)
+    #     logging.info(f"Board state:\n{board_str}\n")
 
     def create_action(self, board):
         actions: list[str]
         turn: int
+
+        if self.p1turn == 0 or self.p2turn == 0:
+            if self.player_number == 1:
+                return "T254"
+            self.us = 4
+            self.enemy = 1
+            return "A099"
+
         if self.player_number == 1:
             actions = self.p1Actions
             turn = self.p1turn
