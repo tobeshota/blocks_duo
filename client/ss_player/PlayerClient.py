@@ -1011,9 +1011,9 @@ class PlayerClient:
         if ret:
             return ret
         if self.p1turn>0:
-            return ["U047","M016"][self.p1turn-2]
+            return ["U047","M025","J018","G013","D021","B143","O241","R581","P0B1","S184"][self.p1turn-2]
         if self.p2turn>0:
-            return ["A0BC","B0CD"][self.p1turn-2]
+            return ["A0BC","B2CD","J27E","H05C","D03D","C02A","G4DA","I028","M269","F0B6"][self.p2turn-2]
         return 'X000'
 
     @staticmethod
