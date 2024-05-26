@@ -1011,9 +1011,15 @@ class PlayerClient:
         if ret:
             return ret
         if self.p1turn>0:
-            return ["U047","M025","J018","G013","D021","B143","O241","R581","P0B1","S184"][self.p1turn-2]
+            _list=["U047","M025","J018","G013","D021","B143","O241","R581","P0B1","S184","A0E2","F3C4","I2A6"]
+            if self.p1turn-2>=len(_list):
+                return "X000"
+            return _list[self.p1turn-2]
         if self.p2turn>0:
-            return ["A0BC","B2CD","J27E","H05C","D03D","C02A","G4DA","I028","M269","F0B6"][self.p2turn-2]
+            _list=["A0BC","B2CD","J27E","H05C","D03D","C02A","G4DA","I028","M269","F0B6","I3D4","E014"]
+            if self.p2turn-2>=len(_list):
+                return "X000"
+            return _list[self.p2turn-2]
         return 'X000'
 
     @staticmethod
